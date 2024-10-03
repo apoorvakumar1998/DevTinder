@@ -24,10 +24,18 @@ app.use('/test/123/1', (req, res) => {
 })
 
 
-app.get('ab?c', (req, res) => {
-  console.log('b is optional here');
+app.get('/ab?c', (req, res) => {
+  res.send('b is optional here');
 })
 
-app.get('ab+c', (req, res) => {
-  console.log('we can have any number of b here');
+app.get('/ab+c', (req, res) => {
+  res.send('we can have any number of b here');
+})
+
+app.get('/ab*cd', (req, res) => {
+  res.send('started with ab and end with cd');
+})
+
+app.get('/(ab)*cd', (req, res) => {
+  res.send('ab is optional');
 })
