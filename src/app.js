@@ -10,7 +10,7 @@ app.listen(3000, (req, res) => {
 
 // if we use app.use -> handles all get put post -> and 1st route which matches the path will execute,others will not override
 // any route starts with /test will be matched here
-
+/*
 app.use('/test', (req, res) => {
   res.send('test')
 })
@@ -38,4 +38,16 @@ app.get('/ab*cd', (req, res) => {
 
 app.get('/(ab)*cd', (req, res) => {
   res.send('ab is optional');
+})
+
+*/
+
+// we can pass any number of route handlers , to execute -> call next() in prev handler
+// or pass 2nd arguments as an array
+app.use('/home', (req, res, next) => {
+  console.log('1st response');
+  next();
+}, (req, res, next) => {
+  console.log('2nd response');
+  res.send('2nd response')
 })
