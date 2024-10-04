@@ -49,5 +49,40 @@ app.use('/home', (req, res, next) => {
   next();
 }, (req, res, next) => {
   console.log('2nd response');
-  res.send('2nd response')
+  res.send('2nd response');
+})
+
+
+//middleware for admin - checks auth for all routes which starts with 'admin'
+app.use('/admin', (req, res, next) => {
+  console.log('checking admin access auth');
+  const token = 'ab1c';
+  if (token === 'abc') {
+    next();
+  } else {
+    res.status(401).send('Unauthorised user');
+  }
+})
+
+app.get('/admin/getData', (req, res) => {
+  res.send('Admin data');
+})
+
+
+
+//handling errors
+
+//err is the 1st argument - use this in the end so that if specific route has try catch error handling then that will be executed
+app.use('/', (err, req, res, next) => {
+  if (err) {
+    res.status(500).send('something went wrong');
+  }
+})
+
+app.get('/error', (req, res, next) => {
+  try {
+    throw new Error('error');
+  } catch (err) {
+    res.status(500).send(err);
+  }
 })
